@@ -33,7 +33,8 @@ public class BookServiceImpl implements IBookService {
 			return Response.notModified().build();
 		}
 		books.put(book.getId(), book);		
-		return Response.status(403).entity(book).build();
+		//return Response.status(403).entity(book).build();
+		return Response.status(200).entity(book).build();
 	}
 
 	@Override
