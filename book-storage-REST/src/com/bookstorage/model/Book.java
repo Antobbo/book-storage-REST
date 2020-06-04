@@ -17,8 +17,7 @@ public class Book {
 		this.location_id = location_id;
 	}
 	
-	public Book()
-	{}
+	public Book(){}
 	
 	public int getId() {
 		return id;

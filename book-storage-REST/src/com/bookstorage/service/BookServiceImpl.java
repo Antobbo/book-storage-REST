@@ -2,6 +2,7 @@ package com.bookstorage.service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -61,16 +62,13 @@ public class BookServiceImpl implements IBookService {
 	@Produces("application/json")
 	public Book[] getAllBook() {
 		
-		//(new Book(213, "TestTitle", "TestAuthor", 3))
-		Book[] books = new Book[2];
-		for(int i = 0; i <= books.length; i++)
-		{
-			books[i].setId(i);
-			books[i].setAuthor("xx_" + i);
-			books[i].setTitle("yy_" + i);
-			books[i].setLocation_id(i);
-			
+		Set<Integer> ids = books.keySet();
+		Book[] b = new Book[ids.size()];
+		int i=0;
+		for(Integer id : ids){
+			b[i] = books.get(id);
+			i++;
 		}
-		return books;
+		return b;
 	}
 }
