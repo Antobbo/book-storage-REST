@@ -1,5 +1,9 @@
 package com.bookstorage.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+
+@XmlRootElement( name = "book")
 public class Book {
 	private int id;
 	private String title;
@@ -12,6 +16,9 @@ public class Book {
 		this.author = author;
 		this.location_id = location_id;
 	}
+	
+	public Book()
+	{}
 	
 	public int getId() {
 		return id;
