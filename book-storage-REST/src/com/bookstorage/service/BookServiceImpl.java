@@ -43,8 +43,12 @@ public class BookServiceImpl implements IBookService {
 	@Path("/{id}/delete")
 	@Produces("application/json")
 	public Response deleteBook(@PathParam("id") int id) {
-		
-		return null;
+		if((books.get(id)) == null)
+		{
+			return Response.status(204).build();
+		}
+		books.remove(id);
+		return Response.status(200).build();
 	}
 
 	@Override
