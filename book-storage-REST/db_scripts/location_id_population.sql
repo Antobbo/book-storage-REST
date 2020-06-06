@@ -1,0 +1,1 @@
+insert into location_id (location_id, place) values (1, 'DOWNSTAIRS'), (2, 'UPSTAIRS_FIRST_BEDROOM'), (3, 'UPSTAIRS_SECOND_BEDROOM'), (4, 'UPSTAIRS_SPARE_ROOM'), (5, 'ON_LOAN');
