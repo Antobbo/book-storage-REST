@@ -58,14 +58,22 @@ public class DbAccess
     	Book bookToReturn = new Book();
     	try
     	{
-    		while (bookResultSet.next()) 
-    		{	    		
-    			bookToReturn.setId(Integer.valueOf(bookResultSet.getString("id")));
-    			bookToReturn.setTitle(bookResultSet.getString("title"));
-	    		bookToReturn.setAuthor(bookResultSet.getString("author"));
-	    		bookToReturn.setLocation_id(Integer.valueOf(bookResultSet.getString("location_id")));
-	    		
-    		 }
+			if (bookResultSet.next()) 
+			{
+			    do 
+			    {
+			    	bookToReturn.setId(Integer.valueOf(bookResultSet.getString("id")));
+	    			bookToReturn.setTitle(bookResultSet.getString("title"));
+		    		bookToReturn.setAuthor(bookResultSet.getString("author"));
+		    		bookToReturn.setLocation_id(Integer.valueOf(bookResultSet.getString("location_id")));
+			    } 
+			    while(bookResultSet.next());
+			} 
+			else 
+			{
+			    System.out.println("No record found ");
+			    return null;
+			}
     	} 
     	catch (SQLException e)
     	{
