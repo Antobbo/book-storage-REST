@@ -14,11 +14,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.bookstorage.db.access.DbAccess;
 import com.bookstorage.model.Book;
 
 @Path("/book")
 public class BookServiceImpl implements IBookService {
 	
+	private static DbAccess dbAccess = new DbAccess();
 	private static Map<Integer,Book> books = new HashMap<Integer,Book>();
 
 	@Override
@@ -56,8 +58,8 @@ public class BookServiceImpl implements IBookService {
 	@Path("/{id}/get")
 	@Produces("application/json")
 	public Book getBook(@PathParam("id") int id) {
-		
-		return books.get(id);
+		dbAccess.connectToDb();
+		return dbAccess.getBook(id);
 	}
 
 	@Override
@@ -65,14 +67,7 @@ public class BookServiceImpl implements IBookService {
 	@Path("/getAll")
 	@Produces("application/json")
 	public Book[] getAllBook() {
-		
-		Set<Integer> ids = books.keySet();
-		Book[] b = new Book[ids.size()];
-		int i=0;
-		for(Integer id : ids){
-			b[i] = books.get(id);
-			i++;
-		}
-		return b;
+		dbAccess.connectToDb();
+		return dbAccess.getAllBooks();
 	}
 }
