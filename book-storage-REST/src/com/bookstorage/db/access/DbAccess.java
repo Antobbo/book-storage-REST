@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
+
 import com.bookstorage.model.Book;
 
 public class DbAccess
@@ -32,6 +35,28 @@ public class DbAccess
 			e.printStackTrace();
     	 }
     }
+    public Response addBook(Book book)
+    {
+    	ResponseBuilder builder = null;
+    	try 
+    	{
+			statement.executeUpdate(String.format(SqlStrings.INSERT_BOOK, SqlStrings.BOOK_TABLE, book.getTitle(), book.getAuthor(), book.getLocation_id()));
+			builder = Response.ok(book);	
+			builder.header("success", "Successfully added");
+			
+    	} 
+    	catch (SQLException e) 
+    	{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+//use the below in FE to get the proper message.
+//    	Response build = builder.build();
+//    	String title = ((Book)build.getEntity()).getTitle();
+    	return builder.build();
+    }
+    
+    
     public Book getBook(int id)
     {
     	ResultSet bookResultSet;

@@ -1,6 +1,9 @@
 package com.bookstorage.db.access;
 
-public class SqlStrings {
+public class SqlStrings 
+{
+	public static final String BOOK_TABLE = "books";
+	public static final String INSERT_BOOK = "INSERT INTO %s (title, author, location_id) VALUES ('%s', '%s', '%s');";
 	public static final String DELETE = "";
 //	public static final String SELECT_RECORD = "SELECT books.id, books.title, books.author, location_id.place from books INNER JOIN location_id ON books.location_id = location_id.location_id WHERE id = %d";
 	public static final String SELECT_RECORD = "SELECT * from books WHERE id = %d";
