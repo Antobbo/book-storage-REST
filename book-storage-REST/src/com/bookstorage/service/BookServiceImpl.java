@@ -31,13 +31,8 @@ public class BookServiceImpl implements IBookService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	
 	public Response addBook(Book book) {		
-		
-		if(books.get(book.getId()) != null){
-			
-			return Response.notModified().build();
-		}
-		books.put(book.getId(), book);		
-		return Response.status(200).entity(book).build();
+		dbAccess.connectToDb();		
+		return dbAccess.addBook(book);
 	}
 
 	@Override
