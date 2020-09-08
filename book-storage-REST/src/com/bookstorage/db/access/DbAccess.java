@@ -138,6 +138,22 @@ public class DbAccess
 		}
 		return null;
     }
+	public Response deleteBook(int id) {
+		try
+		{
+			statement.executeUpdate(String.format(SqlStrings.DELETE, SqlStrings.BOOK_TABLE, id));
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String deleteMsg = String.format("The record with id %d has been deleted", id);
+		return Response
+	      .status(Response.Status.OK)
+	      .entity(deleteMsg)
+	      .build();
+	}
     
     
 }

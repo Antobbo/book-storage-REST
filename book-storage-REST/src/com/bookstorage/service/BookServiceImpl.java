@@ -31,7 +31,7 @@ public class BookServiceImpl implements IBookService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	
 	public Response addBook(Book book) {		
-		dbAccess.connectToDb();		
+		dbAccess.connectToDb();
 		return dbAccess.addBook(book);
 	}
 
@@ -40,12 +40,8 @@ public class BookServiceImpl implements IBookService {
 	@Path("/{id}/delete")
 	@Produces("application/json")
 	public Response deleteBook(@PathParam("id") int id) {
-		if((books.get(id)) == null)
-		{
-			return Response.status(204).build();
-		}
-		books.remove(id);
-		return Response.status(200).build();
+		dbAccess.connectToDb();
+	return	dbAccess.deleteBook(id);
 	}
 
 	@Override
