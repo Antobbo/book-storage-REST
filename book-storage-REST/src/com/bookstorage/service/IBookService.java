@@ -11,5 +11,5 @@ public interface IBookService {
 	
 	public Book getBook(int id);
 	
-	public Book[] getAllBook();
+	//public Book[] getAllBook();
 }

@@ -17,7 +17,6 @@ public class DbAccess
 {
 	private Connection connect = null;
     private Statement statement = null;
-    private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
     
     public void connectToDb()
@@ -43,6 +42,7 @@ public class DbAccess
 			statement.executeUpdate(String.format(SqlStrings.INSERT_BOOK, SqlStrings.BOOK_TABLE, book.getTitle(), book.getAuthor(), book.getLocation_id()));
 			builder = Response.ok(book);	
 			builder.header("success", "Successfully added");
+			statement.close();
 			
     	} 
     	catch (SQLException e) 
@@ -59,24 +59,43 @@ public class DbAccess
     
     public Book getBook(int id)
     {
-    	ResultSet bookResultSet;
-    	Statement getBookStatement;
-    	
-    	
+//    	ResultSet bookResultSet;
+//    	Statement getBookStatement;
+//    	
+//    	
+//    	Book bookQueried = null;
+//    	try
+//    	{
+//    		getBookStatement = connect.createStatement();
+//    		bookResultSet = getBookStatement.executeQuery(String.format(SqlStrings.SELECT_RECORD, id));
+//			//TODO: CHECK ID, IF NO ID PRINT MSG
+//    		bookQueried = constructObject(bookResultSet);
+//			bookResultSet.close();
+//			getBookStatement.close();
+//			statement.close();
+//			resultSet.close();
+//		} 
+//    	catch (SQLException e)
+//    	{
+//			e.printStackTrace();
+//		}
+//    	return bookQueried;
     	Book bookQueried = null;
     	try
     	{
-    		getBookStatement = connect.createStatement();
-    		bookResultSet = getBookStatement.executeQuery(String.format(SqlStrings.SELECT_RECORD, id));
-			//TODO: CHECK ID, IF NO ID PRINT MSG
-    		bookQueried = constructObject(bookResultSet);
-			bookResultSet.close();
-			getBookStatement.close();
+			resultSet = statement.executeQuery(String.format(SqlStrings.SELECT_RECORD, id));
+
+    		bookQueried = constructObject(resultSet);
+
+			statement.close();
+			resultSet.close();
 		} 
-    	catch (SQLException e)
+    	catch (SQLException e) 
     	{
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}	
+    	
     	return bookQueried;
     }
     private Book constructObject(ResultSet bookResultSet) {
@@ -109,39 +128,40 @@ public class DbAccess
     	return bookToReturn;
 		
 	}
-	public Book[] getAllBooks()
-    {
-    	Book[] books = null;
-		try
-    	{
-    		resultSet = statement.executeQuery(SqlStrings.SELECT_NUMBER_ALL_RECORDS);			
-    		resultSet.next();
-    		int dbNumberRecords = resultSet.getInt(1);//get number of record
-    		resultSet = statement.executeQuery(SqlStrings.SELECT_ALL_IDS);
-    		books = new Book[dbNumberRecords];
-    		int i = 0;
-    		while((resultSet.next()) && (i < dbNumberRecords))
-    		{
-    			int bookId = Integer.parseInt(resultSet.getString("id"));
-    			books[i] = getBook(bookId);    		
-    			System.out.println();
-    			i++;
-    		}
-    		resultSet.close();
-    		statement.close();
-    		return books;    		
-		} 
-    	catch (SQLException e)
-    	{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-    }
+//	public Book[] getAllBooks()
+//    {
+//    	Book[] books = null;
+//		try
+//    	{
+//    		resultSet = statement.executeQuery(SqlStrings.SELECT_NUMBER_ALL_RECORDS);			
+//    		resultSet.next();
+//    		int dbNumberRecords = resultSet.getInt(1);//get number of record
+//    		resultSet = statement.executeQuery(SqlStrings.SELECT_ALL_IDS);
+//    		books = new Book[dbNumberRecords];
+//    		int i = 0;
+//    		while((resultSet.next()) && (i < dbNumberRecords))
+//    		{
+//    			int bookId = Integer.parseInt(resultSet.getString("id"));
+//    			books[i] = getBook(bookId);    		
+//    			System.out.println();
+//    			i++;
+//    		}
+//    		resultSet.close();
+//    		statement.close();
+//    		return books;    		
+//		} 
+//    	catch (SQLException e)
+//    	{
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return null;
+//    }
 	public Response deleteBook(int id) {
 		try
 		{
 			statement.executeUpdate(String.format(SqlStrings.DELETE, SqlStrings.BOOK_TABLE, id));
+			statement.close();
 		} 
 		catch (SQLException e) 
 		{

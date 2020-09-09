@@ -53,12 +53,12 @@ public class BookServiceImpl implements IBookService {
 		return dbAccess.getBook(id);
 	}
 
-	@Override
-	@GET
-	@Path("/getAll")
-	@Produces("application/json")
-	public Book[] getAllBook() {
-		dbAccess.connectToDb();
-		return dbAccess.getAllBooks();
-	}
+//	@Override
+//	@GET
+//	@Path("/getAll")
+//	@Produces("application/json")
+//	public Book[] getAllBook() {
+//		dbAccess.connectToDb();
+//		return dbAccess.getAllBooks();
+//	}
 }
