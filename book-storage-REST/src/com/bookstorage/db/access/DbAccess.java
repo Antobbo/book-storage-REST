@@ -174,6 +174,27 @@ public class DbAccess
 	      .entity(deleteMsg)
 	      .build();
 	}
+	public Response updateBook(int id, String title, String author, int location_id) {
+		try
+		{
+			statement.executeUpdate(String.format(SqlStrings.UPDATE_RECORD, SqlStrings.BOOK_TABLE, title, author, location_id, id));
+			statement.close();
+		} 
+		catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String successfulUpdateMsg = String.format("The record with id %d has been updated", id);
+
+		// TODO Auto-generated method stub
+		return Response
+			      .status(Response.Status.OK)
+			      .entity(successfulUpdateMsg)
+			      .build();
+	}
     
+	//TODO: method to check that the db contains the provided ID
+
     
 }
